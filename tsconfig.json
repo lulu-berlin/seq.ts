@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "declaration": true,
+    "outDir": "./lib",
+    "rootDir": ".",
+    "importHelpers": true,
+    "downlevelIteration": true,
+    "strict": true,
+    "types": ["node", "mocha"]
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./test/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

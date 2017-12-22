@@ -1,0 +1,27 @@
+{
+  "name": "seq.ts",
+  "version": "1.0.0",
+  "description": "A typescript wrapper for Iterable<T> providing functional programming functionality similar to ReadonlyArray<T>",
+  "main": "./lib/seq.js",
+  "types": "./lib/seq.d.ts",
+  "scripts": {
+    "test": "mocha --opts mocha.opts",
+    "build": "tsc -p src/tsconfig.json"
+  },
+  "keywords": [
+    "typescript",
+    "functional programming"
+  ],
+  "author": "Ya'ar Hever",
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "@types/chai": "^4.0.10",
+    "@types/mocha": "^2.2.44",
+    "@types/node": "^8.5.2",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "ts-node": "^4.0.2",
+    "tslib": "^1.8.1",
+    "typescript": "^2.6.2"
+  }
+}

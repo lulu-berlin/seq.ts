@@ -24,11 +24,12 @@ export class Seq<T> implements IterableIterator<T> {
   forEach (callback: SeqCallback<T, void>, thisArg?: any): void {
     const boundCallback = thisArg ? callback.bind(thisArg) : callback;
 
-    let item = this.iterator.next();
-    let index = 0;
-
-    while (!item.done) {
-      boundCallback(item, index++, this);
+    for (
+      let item = this.iterator.next(), index = 0;
+      !item.done;
+      item = this.iterator.next()
+    ) {
+      boundCallback(item.value, index++, this);
     }
   }
 

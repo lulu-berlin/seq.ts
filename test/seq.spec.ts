@@ -153,5 +153,14 @@ describe('Seq', () => {
 
       expect(result).to.eql([]);
     });
+
+    it('should create a Seq from a spread string', () => {
+      const string = 'hello world';
+      const seq = Seq.of(...string);
+      const result = [...seq];
+
+      expect(result).to.eql(['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd']);
+    });
+
   });
 });

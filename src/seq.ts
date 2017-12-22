@@ -21,7 +21,7 @@ export class Seq<T> implements IterableIterator<T> {
     return this;
   };
 
-  forEach (callback: SeqCallback<T, void>, thisArg?: any): void {
+  forEach(callback: SeqCallback<T, void>, thisArg?: any): void {
     const boundCallback = thisArg ? callback.bind(thisArg) : callback;
 
     for (
@@ -33,7 +33,7 @@ export class Seq<T> implements IterableIterator<T> {
     }
   }
 
-  map<U> (callback: SeqCallback<T, U>, thisArg?: any): Seq<U> {
+  map<U>(callback: SeqCallback<T, U>, thisArg?: any): Seq<U> {
     const boundCallback: SeqCallback<T, U> = thisArg ? callback.bind(thisArg) : callback;
 
     return new Seq({
@@ -52,5 +52,9 @@ export class Seq<T> implements IterableIterator<T> {
         };
       }
     });
+  }
+
+  static of<T>(...values: T[]): Seq<T> {
+    return new Seq(values);
   }
 }

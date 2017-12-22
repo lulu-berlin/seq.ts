@@ -1,16 +1,34 @@
 export type SeqCallback<T, U> = (currentValue: T, index: number, seq: Seq<T>) => U;
 
-export class Seq<T> implements Iterable<T> {
-  constructor(private iterable: Iterable<T>) {}
+export class Seq<T> implements IterableIterator<T> {
+  private _iterator: Iterator<T> | null = null;
 
-  [Symbol.iterator] = this.iterable[Symbol.iterator]
+  private get iterator(): Iterator<T> {
+    if (!this._iterator) {
+      this._iterator = this.iterable[Symbol.iterator]();
+    }
+    return this._iterator;
+  }
+
+  constructor(private iterable: Iterable<T>) {
+  }
+
+  public next(): IteratorResult<T> {
+    return this.iterator.next();
+  }
+
+  [Symbol.iterator]() {
+    return this;
+  };
 
   forEach (callback: SeqCallback<T, void>, thisArg?: any): void {
     const boundCallback = thisArg ? callback.bind(thisArg) : callback;
+
+    let item = this.iterator.next();
     let index = 0;
 
-    for (const item of this.iterable) {
-      boundCallback(item, index++, this)
+    while (!item.done) {
+      boundCallback(item, index++, this);
     }
   }
 
@@ -19,12 +37,11 @@ export class Seq<T> implements Iterable<T> {
 
     return new Seq({
       [Symbol.iterator]: () => {
-        const iterator = this.iterable[Symbol.iterator]();
         let index = 0;
 
         return {
           next: () => {
-            const {done, value} = iterator.next();
+            const {done, value} = this.iterator.next();
 
             return {
               done,

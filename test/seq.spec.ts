@@ -364,7 +364,7 @@ describe('Seq', () => {
       () => {
         const array = ['z', 'f', 'h', 'e', 'q'];
         const seq = new Seq(array);
-        const sortedArray = [...array].sort();
+        const sortedArray = ['e', 'f', 'h', 'q', 'z'];
         const sortedSeq = seq.sort();
 
         expect([...sortedSeq]).to.eql(sortedArray);
@@ -375,7 +375,7 @@ describe('Seq', () => {
     it('should return a new reversed Seq, as it would be with Array.prototype.reverse', () => {
         const array = ['z', 'f', 'h', 'e', 'q'];
         const seq = new Seq(array);
-        const reversedArray = [...array].reverse();
+        const reversedArray = ['q', 'e', 'h', 'f', 'z'];
         const reversedSeq = seq.reverse();
 
         expect([...reversedSeq]).to.eql(reversedArray);

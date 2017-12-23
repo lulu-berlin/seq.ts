@@ -157,13 +157,7 @@ export class Seq<T> implements IterableIterator<T> {
 
     return false;
   }
-/*
-reduce(
-  callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
-  initialValue?: T
-): T;
 
-*/
   reduce<U>(
     callbackfn: (
       previousValue: U, currentValue: T, currentIndex: number, seq: Seq<T>

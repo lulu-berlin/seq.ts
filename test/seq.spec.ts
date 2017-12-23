@@ -239,5 +239,11 @@ describe('Seq', () => {
       const result = seq.find(i => i < 6);
       expect(result).to.be.equal(5);
     });
+
+    it('should return undefined if nothing was found', () => {
+      const seq = Seq.of(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+      const result = seq.find(i => i > 100);
+      expect(result).to.be.undefined;
+    });
   });
 });

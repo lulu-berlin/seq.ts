@@ -1,5 +1,8 @@
 export type SeqCallback<T, U> = (currentValue: T, index: number, seq: Seq<T>) => U;
 
+const inverse = (func: Function, thisArg: any) =>
+  (...params: any[]) => !func.call(thisArg, ...params);
+
 export class Seq<T> implements IterableIterator<T> {
   private _iterator: Iterator<T> | null = null;
 
@@ -81,29 +84,11 @@ export class Seq<T> implements IterableIterator<T> {
   }
 
   every(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {
-    const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
-    let index = 0;
-
-    for (const item of this) {
-      if (!boundCallback(item, index++, this)) {
-        return false;
-      }
-    }
-
-    return true;
+    return this.find(inverse(callback, thisArg)) === undefined;
   }
 
   some(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {
-    const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
-    let index = 0;
-
-    for (const item of this) {
-      if (boundCallback(item, index++, this)) {
-        return true;
-      }
-    }
-
-    return false;
+    return this.find(callback, thisArg) !== undefined;
   }
 
   find(callback: SeqCallback<T, boolean>, thisArg?: any): T | void {

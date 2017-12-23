@@ -339,4 +339,18 @@ describe('Seq', () => {
       expect(array.toString()).to.eql(seq.toString());
     });
   });
+
+  describe('.sort([compareFunction])', () => {
+    it(
+      'should return a new Seq with sorted elements, ' +
+      'as they would be with Array.prototype.sort',
+      () => {
+        const array = ['z', 'f', 'h', 'e', 'q'];
+        const seq = new Seq(array);
+        const sortedArray = [...array].sort();
+        const sortedSeq = seq.sort();
+
+        expect([...sortedSeq]).to.eql(sortedArray);
+      });
+  });
 });

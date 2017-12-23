@@ -166,6 +166,10 @@ export class Seq<T> implements IterableIterator<T> {
     return [...this].toString();
   }
 
+  sort(compareFunction?: (a: T, b: T) => number): Seq<T> {
+    return new Seq([...this].sort(compareFunction));
+  }
+
   static of<T>(...values: T[]): Seq<T> {
     return new Seq(values);
   }

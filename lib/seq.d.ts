@@ -19,5 +19,6 @@ export declare class Seq<T> implements IterableIterator<T> {
     includes(searchElement: T, fromIndex?: number): boolean;
     join(separator?: string): string;
     toString(): string;
+    sort(compareFunction?: (a: T, b: T) => number): Seq<T>;
     static of<T>(...values: T[]): Seq<T>;
 }

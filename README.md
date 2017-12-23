@@ -1,5 +1,5 @@
 # seq.ts
-A typescript wrapper for Iterable&lt;T> providing functional programming functionality similar to ReadonlyArray&lt;T>
+A typescript wrapper for `Iterable<T>` providing functional programming functionality similar to `ReadonlyArray<T>`.
 
 # Copyright
 

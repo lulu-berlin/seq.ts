@@ -495,4 +495,29 @@ describe('Seq', () => {
       expect(spy).to.have.been.calledWith(4, 4);
     });
   });
+
+  describe('Seq.initInfinite()', () => {
+    it('should return an infinite Seq', () => {
+      const seq = Seq.initInfinite();
+
+      const iterator = seq[Symbol.iterator]();
+      expect(iterator.next()).to.eql({value: 0, done: false});
+      expect(iterator.next()).to.eql({value: 1, done: false});
+      expect(iterator.next()).to.eql({value: 2, done: false});
+      expect(iterator.next()).to.eql({value: 3, done: false});
+      expect(iterator.next()).to.eql({value: 4, done: false});
+    });
+
+    it('should call the initializer function for each count and return the result', () => {
+      const spy = sinon.stub().returns('x');
+      const seq = Seq.init(5, spy);
+      const iterator = seq[Symbol.iterator]();
+      expect(iterator.next()).to.eql({value: 'x', done: false});
+      expect(spy).to.have.been.calledWith(0, 0);
+      expect(iterator.next()).to.eql({value: 'x', done: false});
+      expect(spy).to.have.been.calledWith(1, 1);
+      expect(iterator.next()).to.eql({value: 'x', done: false});
+      expect(spy).to.have.been.calledWith(2, 2);
+    });
+  });
 });

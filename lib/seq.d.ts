@@ -28,4 +28,6 @@ export declare class Seq<T> implements IterableIterator<T> {
     static readonly empty: Seq<never>;
     static init(count: number): Seq<number>;
     static init<T>(count: number, initializer: SeqCallback<number, T>): Seq<T>;
+    static initInfinite<T>(): Seq<number>;
+    static initInfinite<T>(initializer: SeqCallback<number, T>): Seq<T>;
 }

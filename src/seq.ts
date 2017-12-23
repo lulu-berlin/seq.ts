@@ -260,9 +260,27 @@ export class Seq<T> implements IterableIterator<T> {
 
   static init(count: number): Seq<number>;
   static init<T>(count: number, initializer: SeqCallback<number, T>): Seq<T>;
-
   static init<T>(count: number, initializer?: SeqCallback<number, T>): Seq<T | number> {
     const seq = Seq.from(Array(count).keys());
+
+    return initializer ? seq.map(initializer) : seq;
+  }
+
+  static initInfinite<T>(): Seq<number>;
+  static initInfinite<T>(initializer: SeqCallback<number, T>): Seq<T>;
+  static initInfinite<T>(initializer?: SeqCallback<number, T>): Seq<T | number> {
+    const seq = new Seq({
+      [Symbol.iterator]: () => {
+        let index = 0;
+        return {
+          next: () => ({
+            value: index++,
+            done: false
+          })
+        }
+      }
+    });
+
     return initializer ? seq.map(initializer) : seq;
   }
 }

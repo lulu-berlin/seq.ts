@@ -203,6 +203,22 @@ describe('Seq', () => {
       expect(iterator.next().value).to.eql([1, 'b']);
       expect(iterator.next().value).to.eql([2, 'c']);
     });
+
+    it('should be iterable with for...of', () => {
+      const seq = new Seq(['a', 'b', 'c']);
+      const iterator = seq.entries();
+      const result = [];
+
+      for (const item of iterator) {
+        result.push(item);
+      }
+
+      expect(result).to.eql([
+        [0, 'a'],
+        [1, 'b'],
+        [2, 'c']
+      ]);
+    });
   });
 
   describe('.every()', () => {

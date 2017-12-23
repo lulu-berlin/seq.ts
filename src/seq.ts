@@ -77,7 +77,7 @@ export class Seq<T> implements IterableIterator<T> {
     });
   }
 
-  entries(): Iterator<[number, T]> {
+  entries(): IterableIterator<[number, T]> {
     return this.map((item, index) => [index, item] as [number, T]);
   }
 

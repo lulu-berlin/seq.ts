@@ -105,13 +105,24 @@ export class Seq<T> implements IterableIterator<T> {
 
   find(callback: SeqCallback<T, boolean>, thisArg?: any): T | void {
     const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
-    let index = 0;
 
-    for (const item of this) {
-      if (boundCallback(item, index++, this)) {
+    for (const [index, item] of this.entries()) {
+      if (boundCallback(item, index, this)) {
         return item;
       }
     }
+  }
+
+  findIndex(callback: SeqCallback<T, boolean>, thisArg?: any): number {
+    const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
+
+    for (const [index, item] of this.entries()) {
+      if (boundCallback(item, index, this)) {
+        return index;
+      }
+    }
+
+    return -1;
   }
 
   every(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {

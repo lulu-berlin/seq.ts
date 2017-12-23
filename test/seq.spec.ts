@@ -262,4 +262,18 @@ describe('Seq', () => {
       expect(result).to.be.undefined;
     });
   });
+
+  describe('.findIndex()', () => {
+    it('should return the index of the first matching item', () => {
+      const seq = Seq.of('a', 'b', 'c', 'd', 'e');
+      const result = seq.findIndex(item => item === 'c');
+      expect(result).to.be.equal(2);
+    });
+
+    it('should return -1 if nothing was found', () => {
+      const seq = Seq.of(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+      const result = seq.findIndex(i => i > 100);
+      expect(result).to.be.equal(-1);
+    });
+  });
 });

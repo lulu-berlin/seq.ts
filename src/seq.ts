@@ -216,10 +216,19 @@ export class Seq<T> implements IterableIterator<T> {
   }
 
   concat(...items: (Seq<T> | T)[]): Seq<T> {
+    return Seq.concat(this, ...items);
+  }
+
+  static concat<T>(...items: (Seq<T> | T)[]): Seq<T> {
+    if (items.length < 1) {
+      return Seq.of();
+    }
+
     return new Seq({
       [Symbol.iterator]: () => {
-        let itemIndex = -1;
-        let iterator: Iterator<T> = this;
+        let itemIndex = 0;
+        let nextItem = items[itemIndex];
+        let iterator: Iterator<T> = nextItem instanceof Seq ? nextItem : Seq.of(nextItem);
 
         const next = (): IteratorResult<T> => {
           const result = iterator.next();
@@ -228,9 +237,11 @@ export class Seq<T> implements IterableIterator<T> {
             return result;
           } else {
             itemIndex++;
+
             if (itemIndex < items.length) {
-              const nextItem = items[itemIndex];
+              nextItem = items[itemIndex];
               iterator = nextItem instanceof Seq ? nextItem : Seq.of(nextItem);
+
               return next();
             } else {
               return {

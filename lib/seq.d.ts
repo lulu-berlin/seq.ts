@@ -9,5 +9,6 @@ export declare class Seq<T> implements IterableIterator<T> {
     forEach(callback: SeqCallback<T, void>, thisArg?: any): void;
     map<U>(callback: SeqCallback<T, U>, thisArg?: any): Seq<U>;
     filter(callback: SeqCallback<T, boolean>, thisArg?: any): Seq<T>;
+    entries(): Iterator<[number, T]>;
     static of<T>(...values: T[]): Seq<T>;
 }

@@ -161,7 +161,6 @@ describe('Seq', () => {
 
       expect(result).to.eql(['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd']);
     });
-
   });
 
   describe('.filter()', () => {
@@ -192,6 +191,17 @@ describe('Seq', () => {
 
       expect(result).to.eql([]);
     });
+  });
 
+  describe('.entries()', () => {
+    it('should return a new iterator with key/value pairs of index and item', () => {
+      const a = ['a', 'b', 'c'];
+      const seq = new Seq(a);
+      const iterator = seq.entries();
+
+      expect(iterator.next().value).to.eql([0, 'a']);
+      expect(iterator.next().value).to.eql([1, 'b']);
+      expect(iterator.next().value).to.eql([2, 'c']);
+    });
   });
 });

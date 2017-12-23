@@ -353,4 +353,15 @@ describe('Seq', () => {
         expect([...sortedSeq]).to.eql(sortedArray);
       });
   });
+
+  describe('.reverse()', () => {
+    it('should return a new reversed Seq, as it would be with Array.prototype.reverse', () => {
+        const array = ['z', 'f', 'h', 'e', 'q'];
+        const seq = new Seq(array);
+        const reversedArray = [...array].reverse();
+        const reversedSeq = seq.reverse();
+
+        expect([...reversedSeq]).to.eql(reversedArray);
+      });
+  });
 });

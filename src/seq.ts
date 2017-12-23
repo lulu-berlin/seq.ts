@@ -170,6 +170,10 @@ export class Seq<T> implements IterableIterator<T> {
     return new Seq([...this].sort(compareFunction));
   }
 
+  reverse(): Seq<T> {
+    return new Seq([...this].reverse());
+  }
+
   static of<T>(...values: T[]): Seq<T> {
     return new Seq(values);
   }

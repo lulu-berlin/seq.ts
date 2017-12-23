@@ -20,5 +20,6 @@ export declare class Seq<T> implements IterableIterator<T> {
     join(separator?: string): string;
     toString(): string;
     sort(compareFunction?: (a: T, b: T) => number): Seq<T>;
+    reverse(): Seq<T>;
     static of<T>(...values: T[]): Seq<T>;
 }

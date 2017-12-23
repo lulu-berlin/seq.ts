@@ -28,16 +28,10 @@ const sameValueZero = (x: any, y: any): boolean => {
 }
 
 export class Seq<T> implements IterableIterator<T> {
-  private _iterator: Iterator<T> | null = null;
+  private readonly iterator: Iterator<T>;
 
-  private get iterator(): Iterator<T> {
-    if (!this._iterator) {
-      this._iterator = this.iterable[Symbol.iterator]();
-    }
-    return this._iterator;
-  }
-
-  constructor(private iterable: Iterable<T>) {
+  constructor(iterable: Iterable<T>) {
+    this.iterator = iterable[Symbol.iterator]();
   }
 
   public next(): IteratorResult<T> {

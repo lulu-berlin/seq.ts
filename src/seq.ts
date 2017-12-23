@@ -187,11 +187,11 @@ reduce(
     const iterator = this.entries();
 
     if (initialValue === undefined) {
-      let {done, value} = iterator.next();
+      let {done, value: [_, acc]} = iterator.next();
       if (done) {
         throw new TypeError('Reduce of empty Seq with no initial value');
       }
-      accumulator = value[1];
+      accumulator = acc;
     } else {
       accumulator = initialValue;
     }

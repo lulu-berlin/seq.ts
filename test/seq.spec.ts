@@ -331,4 +331,12 @@ describe('Seq', () => {
       expect(seq.join('-')).to.eql('a-b-c');
     });
   });
+
+  describe('.toString()', () => {
+    it('should return the same string representation as the corresponding array', () => {
+      const array = [1,2,3];
+      const seq = new Seq(array);
+      expect(array.toString()).to.eql(seq.toString());
+    });
+  });
 });

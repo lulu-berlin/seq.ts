@@ -85,6 +85,14 @@ export class Seq<T> implements IterableIterator<T> {
     return this.map((item, index) => [index, item] as [number, T]);
   }
 
+  keys(): IterableIterator<number> {
+    return this.map((_, index) => index);
+  }
+
+  values(): IterableIterator<T> {
+    return this;
+  }
+
   filter(callback: SeqCallback<T, boolean>, thisArg?: any): Seq<T> {
     const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
 
@@ -152,6 +160,10 @@ export class Seq<T> implements IterableIterator<T> {
 
   join(separator?: string): string {
     return [...this].join(separator);
+  }
+
+  toString(): string {
+    return [...this].toString();
   }
 
   static of<T>(...values: T[]): Seq<T> {

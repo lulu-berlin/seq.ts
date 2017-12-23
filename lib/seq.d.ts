@@ -9,6 +9,8 @@ export declare class Seq<T> implements IterableIterator<T> {
     forEach(callback: SeqCallback<T, void>, thisArg?: any): void;
     map<U>(callback: SeqCallback<T, U>, thisArg?: any): Seq<U>;
     entries(): IterableIterator<[number, T]>;
+    keys(): IterableIterator<number>;
+    values(): IterableIterator<T>;
     filter(callback: SeqCallback<T, boolean>, thisArg?: any): Seq<T>;
     find(callback: SeqCallback<T, boolean>, thisArg?: any): T | void;
     findIndex(callback: SeqCallback<T, boolean>, thisArg?: any): number;
@@ -16,5 +18,6 @@ export declare class Seq<T> implements IterableIterator<T> {
     some(callback: SeqCallback<T, boolean>, thisArg?: any): boolean;
     includes(searchElement: T, fromIndex?: number): boolean;
     join(separator?: string): string;
+    toString(): string;
     static of<T>(...values: T[]): Seq<T>;
 }

@@ -221,7 +221,7 @@ export class Seq<T> implements IterableIterator<T> {
 
   static concat<T>(...items: (Seq<T> | T)[]): Seq<T> {
     if (items.length < 1) {
-      return Seq.of();
+      return Seq.empty;
     }
 
     return new Seq({
@@ -254,5 +254,15 @@ export class Seq<T> implements IterableIterator<T> {
         return {next};
       }
     });
+  }
+
+  static readonly empty = new Seq([]);
+
+  static init(count: number): Seq<number>;
+  static init<T>(count: number, initializer: SeqCallback<number, T>): Seq<T>;
+
+  static init<T>(count: number, initializer?: SeqCallback<number, T>): Seq<T | number> {
+    const seq = Seq.from(Array(count).keys());
+    return initializer ? seq.map(initializer) : seq;
   }
 }

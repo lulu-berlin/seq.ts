@@ -475,4 +475,24 @@ describe('Seq', () => {
       expect([...result]).to.eql([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
     });
   });
+
+  describe('Seq.init()', () => {
+    it('should return a Seq of consecutive numbers from 0 to count', () => {
+      const seq = Seq.init(10);
+      expect(seq).to.be.instanceOf(Seq);
+      expect([...seq]).to.eql([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    });
+
+    it('should call the initializer function for each count and return the result', () => {
+      const spy = sinon.stub().returns('x');
+      const seq = Seq.init(5, spy);
+      expect([...seq]).to.eql(['x', 'x', 'x', 'x', 'x']);
+      expect(spy).to.have.been.callCount(5);
+      expect(spy).to.have.been.calledWith(0, 0);
+      expect(spy).to.have.been.calledWith(1, 1);
+      expect(spy).to.have.been.calledWith(2, 2);
+      expect(spy).to.have.been.calledWith(3, 3);
+      expect(spy).to.have.been.calledWith(4, 4);
+    });
+  });
 });

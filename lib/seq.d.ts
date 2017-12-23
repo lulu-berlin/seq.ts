@@ -25,4 +25,7 @@ export declare class Seq<T> implements IterableIterator<T> {
     static from<T>(iterable: Iterable<T>): Seq<T>;
     concat(...items: (Seq<T> | T)[]): Seq<T>;
     static concat<T>(...items: (Seq<T> | T)[]): Seq<T>;
+    static readonly empty: Seq<never>;
+    static init(count: number): Seq<number>;
+    static init<T>(count: number, initializer: SeqCallback<number, T>): Seq<T>;
 }

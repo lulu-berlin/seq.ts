@@ -412,4 +412,50 @@ describe('Seq', () => {
       expect(() => seq.reduce(() => 0)).to.throw('Reduce of empty Seq with no initial value');
     });
   });
+
+  describe('.concat()', () => {
+    it('should concatenate a Seq with another Seq', () => {
+      const seq1 = new Seq([1, 2, 3]);
+      const seq2 = new Seq([4, 5, 6]);
+
+      const result = seq1.concat(seq2);
+      expect(result).to.be.instanceOf(Seq);
+      expect([...result]).to.eql([1, 2, 3, 4, 5, 6]);
+    });
+
+    it('should concatenate multiple Seqs', () => {
+      const seq1 = new Seq([1, 2, 3]);
+      const seq2 = new Seq([4, 5, 6]);
+      const seq3 = new Seq([7, 8, 9]);
+      const seq4 = new Seq([10, 11, 12]);
+
+      const result = seq1.concat(seq2, seq3, seq4);
+      expect(result).to.be.instanceOf(Seq);
+      expect([...result]).to.eql([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    });
+  });
+
+  it('should concatenate a Seq with a single item', () => {
+    const seq = new Seq([1, 2, 3]);
+
+    const result = seq.concat(4);
+    expect(result).to.be.instanceOf(Seq);
+    expect([...result]).to.eql([1, 2, 3, 4]);
+  });
+
+  it('should concatenate a Seq with multiple items', () => {
+    const seq = new Seq([1, 2, 3]);
+
+    const result = seq.concat(4, 5, 6);
+    expect(result).to.be.instanceOf(Seq);
+    expect([...result]).to.eql([1, 2, 3, 4, 5, 6]);
+  });
+
+  it('should concatenate a seq with a mixture of Seqs and simple items', () => {
+    const seq = Seq.of(1, 2, 3);
+
+    const result = seq.concat(4, Seq.of(5, 6), 7, 8, Seq.of(9));
+    expect(result).to.be.instanceOf(Seq);
+    expect([...result]).to.eql([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  });
 });

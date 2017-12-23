@@ -214,4 +214,34 @@ export class Seq<T> implements IterableIterator<T> {
   static from<T>(iterable: Iterable<T>): Seq<T> {
     return new Seq(iterable);
   }
+
+  concat(...items: (Seq<T> | T)[]): Seq<T> {
+    return new Seq({
+      [Symbol.iterator]: () => {
+        let itemIndex = -1;
+        let iterator: Iterator<T> = this;
+
+        const next = (): IteratorResult<T> => {
+          const result = iterator.next();
+
+          if (!result.done) {
+            return result;
+          } else {
+            itemIndex++;
+            if (itemIndex < items.length) {
+              const nextItem = items[itemIndex];
+              iterator = nextItem instanceof Seq ? nextItem : Seq.of(nextItem);
+              return next();
+            } else {
+              return {
+                done: true
+              } as IteratorResult<T>
+            }
+          }
+        };
+
+        return {next};
+      }
+    });
+  }
 }

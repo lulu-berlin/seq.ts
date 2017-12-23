@@ -157,6 +157,51 @@ export class Seq<T> implements IterableIterator<T> {
 
     return false;
   }
+/*
+reduce(
+  callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
+  initialValue?: T
+): T;
+
+*/
+  reduce<U>(
+    callbackfn: (
+      previousValue: U, currentValue: T, currentIndex: number, seq: Seq<T>
+    ) => U,
+    initialValue: U
+  ): U;
+  reduce(
+    callbackfn: (
+      previousValue: T, currentValue: T, currentIndex: number, seq: Seq<T>
+    ) => T,
+    initialValue?: T
+  ): T;
+
+  reduce(
+    callbackfn: (
+      previousValue: any, currentValue: T, currentIndex: number, seq: Seq<T>
+    ) => any,
+    initialValue?: any
+  ): any {
+    let accumulator;
+    const iterator = this.entries();
+
+    if (initialValue === undefined) {
+      let {done, value} = iterator.next();
+      if (done) {
+        throw new TypeError('Reduce of empty Seq with no initial value');
+      }
+      accumulator = value[1];
+    } else {
+      accumulator = initialValue;
+    }
+
+    for (const [index, item] of iterator) {
+      accumulator = callbackfn(accumulator, item, index, this);
+    }
+
+    return accumulator;
+  }
 
   join(separator?: string): string {
     return [...this].join(separator);

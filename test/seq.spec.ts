@@ -381,4 +381,35 @@ describe('Seq', () => {
         expect([...reversedSeq]).to.eql(reversedArray);
       });
   });
+
+  describe('.reduce()', () => {
+    it('should return the initialValue for an empty Seq', () => {
+      const seq = new Seq<number>([]);
+      const result = seq.reduce((acc, elem) => acc + elem, 10);
+      expect(result).to.be.equal(10);
+    });
+
+    it('should apply the callback once for a single item', () => {
+      const seq = new Seq([5]);
+      const result = seq.reduce((acc, elem) => acc + elem, 10);
+      expect(result).to.be.equal(15);
+    });
+
+    it('should apply the callback on all items', () => {
+      const seq = new Seq([1, 2, 3]);
+      const result = seq.reduce((acc, elem) => acc + elem, 10);
+      expect(result).to.be.equal(16);
+    });
+
+    it('should use the first item as accumulator when there is no initialValue', () => {
+      const seq = new Seq([10, 10, 10]);
+      const result = seq.reduce((acc, elem) => acc * elem);
+      expect(result).to.be.equal(1000);
+    });
+
+    it('should raise an exception when there is no initialValue and the Seq is empty', () => {
+      const seq = new Seq<number>([]);
+      expect(() => seq.reduce(() => 0)).to.throw('Reduce of empty Seq with no initial value');
+    });
+  });
 });

@@ -276,4 +276,36 @@ describe('Seq', () => {
       expect(result).to.be.equal(-1);
     });
   });
+
+  describe('.includes(searchElement[, fromIndex])', () => {
+    it('should return false if the searchElement is not in the sequence', () => {
+      const seq = Seq.of(1, 2, 3, 4, 5);
+      const result = seq.includes(10);
+      expect(result).to.be.false;
+    });
+
+    it('should return true if the searchElement is in the sequence', () => {
+      const seq = Seq.of(1, 2, 3, 10, 5);
+      const result = seq.includes(10);
+      expect(result).to.be.true;
+    });
+
+    it('should match strings', () => {
+      const seq = Seq.of('a', 'b', 'c', 'd');
+      const result = seq.includes('b');
+      expect(result).to.be.true;
+    });
+
+    it('should match NaN', () => {
+      const seq = Seq.of(1, 2, NaN, 4);
+      const result = seq.includes(NaN);
+      expect(result).to.be.true;
+    });
+
+    it('should skip element until fromIndex', () => {
+      const seq = Seq.of(0, 0, 0, 1, 2, 3);
+      const result = seq.includes(0, 3);
+      expect(result).to.be.false;
+    });
+  });
 });

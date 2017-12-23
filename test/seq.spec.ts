@@ -163,4 +163,35 @@ describe('Seq', () => {
     });
 
   });
+
+  describe('.filter()', () => {
+    it('should keep matched items', () => {
+      const seq = Seq.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+      const result = [...seq.filter(i => i < 5)];
+
+      expect(result).to.eql([1, 2, 3, 4]);
+    });
+
+    it('should skip unmatched items', () => {
+      const seq = Seq.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+      const result = [...seq.filter(i => i > 5)];
+
+      expect(result).to.eql([6, 7, 8, 9, 10]);
+    });
+
+    it('should have no effect if the callback always returns true', () => {
+      const seq = Seq.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+      const result = [...seq.filter(() => true)];
+
+      expect(result).to.eql([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    });
+
+    it('should return an empty Seq if the callback always returns false', () => {
+      const seq = Seq.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+      const result = [...seq.filter(() => false)];
+
+      expect(result).to.eql([]);
+    });
+
+  });
 });

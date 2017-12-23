@@ -54,6 +54,28 @@ export class Seq<T> implements IterableIterator<T> {
     });
   }
 
+  filter(callback: SeqCallback<T, boolean>, thisArg?: any): Seq<T> {
+    const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
+
+    return new Seq({
+      [Symbol.iterator]: () => {
+        let index = 0;
+
+        return {
+          next: () => {
+            let result = this.iterator.next();
+
+            while (!result.done && !boundCallback(result.value, index++, this)) {
+              result = this.iterator.next();
+            }
+
+            return result;
+          }
+        }
+      }
+    });
+  }
+
   static of<T>(...values: T[]): Seq<T> {
     return new Seq(values);
   }

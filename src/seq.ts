@@ -177,4 +177,8 @@ export class Seq<T> implements IterableIterator<T> {
   static of<T>(...values: T[]): Seq<T> {
     return new Seq(values);
   }
+
+  static from<T>(iterable: Iterable<T>): Seq<T> {
+    return new Seq(iterable);
+  }
 }

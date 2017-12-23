@@ -163,6 +163,23 @@ describe('Seq', () => {
     });
   });
 
+  describe('Seq.from()', () => {
+    it('should create a Seq out of an iterable', () => {
+      let index = 0;
+      const iter: Iterable<number> = {
+        [Symbol.iterator]: () => ({
+          next: () => ({
+            value: index++,
+            done: !(index <= 3)
+          })
+        })
+      };
+      const seq = Seq.from(iter);
+
+      expect([...seq]).to.eql([0, 1, 2]);
+    });
+  });
+
   describe('.filter()', () => {
     it('should keep matched items', () => {
       const seq = Seq.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);

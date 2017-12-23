@@ -150,6 +150,10 @@ export class Seq<T> implements IterableIterator<T> {
     return false;
   }
 
+  join(separator?: string): string {
+    return [...this].join(separator);
+  }
+
   static of<T>(...values: T[]): Seq<T> {
     return new Seq(values);
   }

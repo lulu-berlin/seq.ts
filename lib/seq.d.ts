@@ -15,5 +15,6 @@ export declare class Seq<T> implements IterableIterator<T> {
     every(callback: SeqCallback<T, boolean>, thisArg?: any): boolean;
     some(callback: SeqCallback<T, boolean>, thisArg?: any): boolean;
     includes(searchElement: T, fromIndex?: number): boolean;
+    join(separator?: string): string;
     static of<T>(...values: T[]): Seq<T>;
 }

@@ -308,4 +308,27 @@ describe('Seq', () => {
       expect(result).to.be.false;
     });
   });
+
+  describe('.join([separator])', () => {
+    let seq: Seq<string>;
+    beforeEach(() => {
+      function* generator() {
+        yield 'a';
+        yield 'b';
+        yield 'c';
+      }
+      seq = new Seq(generator());
+
+    });
+
+    it('should join a sequence of strings into a string with an empty separator', () => {
+      expect(seq.join('')).to.eql('abc');
+    });
+    it('should use a comma as the default separator', () => {
+      expect(seq.join()).to.eql('a,b,c');
+    });
+    it('should join a sequence into a string with a separator', () => {
+      expect(seq.join('-')).to.eql('a-b-c');
+    });
+  });
 });

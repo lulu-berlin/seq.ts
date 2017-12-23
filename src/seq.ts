@@ -57,6 +57,10 @@ export class Seq<T> implements IterableIterator<T> {
     });
   }
 
+  entries(): Iterator<[number, T]> {
+    return this.map((item, index) => [index, item] as [number, T]);
+  }
+
   filter(callback: SeqCallback<T, boolean>, thisArg?: any): Seq<T> {
     const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
 
@@ -79,18 +83,6 @@ export class Seq<T> implements IterableIterator<T> {
     });
   }
 
-  entries(): Iterator<[number, T]> {
-    return this.map((item, index) => [index, item] as [number, T]);
-  }
-
-  every(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {
-    return this.find(inverse(callback, thisArg)) === undefined;
-  }
-
-  some(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {
-    return this.find(callback, thisArg) !== undefined;
-  }
-
   find(callback: SeqCallback<T, boolean>, thisArg?: any): T | void {
     const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
     let index = 0;
@@ -100,6 +92,14 @@ export class Seq<T> implements IterableIterator<T> {
         return item;
       }
     }
+  }
+
+  every(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {
+    return this.find(inverse(callback, thisArg)) === undefined;
+  }
+
+  some(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {
+    return this.find(callback, thisArg) !== undefined;
   }
 
   static of<T>(...values: T[]): Seq<T> {

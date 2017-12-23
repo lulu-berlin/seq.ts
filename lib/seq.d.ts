@@ -8,10 +8,10 @@ export declare class Seq<T> implements IterableIterator<T> {
     [Symbol.iterator](): this;
     forEach(callback: SeqCallback<T, void>, thisArg?: any): void;
     map<U>(callback: SeqCallback<T, U>, thisArg?: any): Seq<U>;
-    filter(callback: SeqCallback<T, boolean>, thisArg?: any): Seq<T>;
     entries(): Iterator<[number, T]>;
+    filter(callback: SeqCallback<T, boolean>, thisArg?: any): Seq<T>;
+    find(callback: SeqCallback<T, boolean>, thisArg?: any): T | void;
     every(callback: SeqCallback<T, boolean>, thisArg?: any): boolean;
     some(callback: SeqCallback<T, boolean>, thisArg?: any): boolean;
-    find(callback: SeqCallback<T, boolean>, thisArg?: any): T | void;
     static of<T>(...values: T[]): Seq<T>;
 }

@@ -80,6 +80,43 @@ export class Seq<T> implements IterableIterator<T> {
     return this.map((item, index) => [index, item] as [number, T]);
   }
 
+  every(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {
+    const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
+    let index = 0;
+
+    for (const item of this) {
+      if (!boundCallback(item, index++, this)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  some(callback: SeqCallback<T, boolean>, thisArg?: any): boolean {
+    const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
+    let index = 0;
+
+    for (const item of this) {
+      if (boundCallback(item, index++, this)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  find(callback: SeqCallback<T, boolean>, thisArg?: any): T | void {
+    const boundCallback: SeqCallback<T, boolean> = thisArg ? callback.bind(thisArg) : callback;
+    let index = 0;
+
+    for (const item of this) {
+      if (boundCallback(item, index++, this)) {
+        return item;
+      }
+    }
+  }
+
   static of<T>(...values: T[]): Seq<T> {
     return new Seq(values);
   }

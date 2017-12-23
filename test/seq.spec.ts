@@ -204,4 +204,40 @@ describe('Seq', () => {
       expect(iterator.next().value).to.eql([2, 'c']);
     });
   });
+
+  describe('.every()', () => {
+    it('should return true if the predicate is true of all items', () => {
+      const seq = Seq.of(2, 4, 6, 8, 10);
+      const result = seq.every(i => i % 2 === 0);
+      expect(result).to.be.true;
+    });
+
+    it('should return false if the predicate is false at least once', () => {
+      const seq = Seq.of(2, 4, 5, 8, 10);
+      const result = seq.every(i => i % 2 === 0);
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('.some()', () => {
+    it('should return true if the predicate is true at least once', () => {
+      const seq = Seq.of(2, 4, 5, 8, 10);
+      const result = seq.some(i => i % 2 === 1);
+      expect(result).to.be.true;
+    });
+
+    it('should return false if the predicate is false for all items', () => {
+      const seq = Seq.of(2, 4, 6, 8, 10);
+      const result = seq.some(i => i % 2 === 1);
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('.find()', () => {
+    it('should return the first item that matches the predicate in the callback', () => {
+      const seq = Seq.of(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+      const result = seq.find(i => i < 6);
+      expect(result).to.be.equal(5);
+    });
+  });
 });

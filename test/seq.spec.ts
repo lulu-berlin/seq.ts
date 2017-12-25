@@ -520,4 +520,39 @@ describe('Seq', () => {
       expect(spy).to.have.been.calledWith(2, 2);
     });
   });
+
+  describe('Seq.zip()', () => {
+    it('should zip two iterables', () => {
+      const a1 = [1, 2, 3];
+      const a2 = ['a', 'b', 'c'];
+      const result = Seq.zip(a1, a2);
+      expect([...result]).to.eql([
+        [1, 'a'],
+        [2, 'b'],
+        [3, 'c']
+      ]);
+    });
+
+    it('should zip two iterables, ignoring additional items on the first one', () => {
+      const a1 = [1, 2, 3, 4, 5];
+      const a2 = ['a', 'b', 'c'];
+      const result = Seq.zip(a1, a2);
+      expect([...result]).to.eql([
+        [1, 'a'],
+        [2, 'b'],
+        [3, 'c']
+      ]);
+    });
+
+    it('should zip two iterables, ignoring additional items on the second one', () => {
+      const a1 = [1, 2, 3];
+      const a2 = ['a', 'b', 'c', 'd', 'e'];
+      const result = Seq.zip(a1, a2);
+      expect([...result]).to.eql([
+        [1, 'a'],
+        [2, 'b'],
+        [3, 'c']
+      ]);
+    });
+  });
 });

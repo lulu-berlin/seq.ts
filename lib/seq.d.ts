@@ -30,4 +30,5 @@ export declare class Seq<T> implements IterableIterator<T> {
     static init<T>(count: number, initializer: SeqCallback<number, T>): Seq<T>;
     static initInfinite<T>(): Seq<number>;
     static initInfinite<T>(initializer: SeqCallback<number, T>): Seq<T>;
+    static zip<T, U>(source1: Iterable<T>, source2: Iterable<U>): Seq<[T, U]>;
 }

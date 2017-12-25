@@ -244,9 +244,7 @@ export class Seq<T> implements IterableIterator<T> {
 
               return next();
             } else {
-              return {
-                done: true
-              } as IteratorResult<T>
+              return {done: true} as IteratorResult<T>
             }
           }
         };
@@ -272,15 +270,32 @@ export class Seq<T> implements IterableIterator<T> {
     const seq = new Seq({
       [Symbol.iterator]: () => {
         let index = 0;
-        return {
-          next: () => ({
-            value: index++,
-            done: false
-          })
-        }
+
+        return {next: () => ({value: index++, done: false})}
       }
     });
 
     return initializer ? seq.map(initializer) : seq;
+  }
+
+  static zip<T, U>(source1: Iterable<T>, source2: Iterable<U>): Seq<[T, U]> {
+    return new Seq({
+      [Symbol.iterator]: () => {
+        const iterator1 = source1[Symbol.iterator]();
+        const iterator2 = source2[Symbol.iterator]();
+
+        return {
+          next: () => {
+            const item1 = iterator1.next();
+            const item2 = iterator2.next();
+
+            return (item1.done || item2.done) ? {done: true} as IteratorResult<[T, U]> : {
+              done: false,
+              value: [item1.value, item2.value] as [T, U]
+            };
+          }
+        }
+      }
+    });
   }
 }
